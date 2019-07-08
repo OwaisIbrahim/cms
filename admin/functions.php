@@ -4,30 +4,36 @@
 
         if( isset($_GET['onlineusers']) ) {
             global $connection;
-            $session = session_id();
-            $time = time();
-            $time_out_in_seconds = 60;
-            $time_out = $time - $time_out_in_seconds;
+            if( !$connection ) {
+                session_start();
+                include("../includes/db.php");
+                
+                $session = session_id();
+                $time = time();
+                $time_out_in_seconds = 30;
+                $time_out = $time - $time_out_in_seconds;
 
-            $query = "SELECT * FROM users_online WHERE session='$session'";
-            $send_query = mysqli_query($connection, $query);
-            $count = mysqli_num_rows($send_query);
+                $query = "SELECT * FROM users_online WHERE session='$session'";
+                $send_query = mysqli_query($connection, $query);
+                $count = mysqli_num_rows($send_query);
 
-            if($count == NULL) {
-                $query = "INSERT INTO users_online(session, time) VALUES('$session', '$time')";
-            } else {
-                $query = "UPDATE users_online SET time=$time WHERE session='$session'";
+                if($count == NULL) {
+                    $query = "INSERT INTO users_online(session, time) VALUES('$session', '$time')";
+                } else {
+                    $query = "UPDATE users_online SET time='$time' WHERE session='$session'";
+                }
+                mysqli_query($connection, $query);
+                $online_user_query = "SELECT * FROM users_online WHERE time > '$time_out'";
+                $users_online = mysqli_query($connection, $online_user_query);
+
+                $count_users = mysqli_num_rows($users_online);
+            
+                echo $count_users;
             }
-            mysqli_query($connection, $query);
-            $online_user_query = "SELECT * FROM users_online WHERE time > '$time_out'";
-            $users_online = mysqli_query($connection, $online_user_query);
 
-            $count_users = mysqli_num_rows($users_online);
-        
-            return $count_users;
         } //GET REQUEST isset()
     }
-
+users_online();
 
     function confirm_query($result) {
         global $connection;        

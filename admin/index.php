@@ -16,9 +16,7 @@
                                 <?php echo $_SESSION['user_username'] ?>
                             </small>
                         </h1>
-                        <h1>
-                            <?php echo $count_users; ?>
-                        </h1>
+                        
                             <?php include "admin_widgets.php" ?>
 
                     </div>
