@@ -85,8 +85,14 @@
         </thead>
         <tbody>
             <?php  
-                $query = "SELECT * FROM posts ORDER BY post_id DESC";
+                // $query = "SELECT * FROM posts ORDER BY post_id DESC";
+                $query = "SELECT posts.post_id, posts.post_author, posts.post_user, posts.post_title, posts.post_cat_id, posts.post_status, posts.post_image, ";
+                $query .= "posts.post_tags, posts.post_comment_count, posts.post_date, posts.post_views_count, categories.cat_id, categories.cat_title ";
+                $query .= "FROM posts ";
+                $query .= "LEFT JOIN categories ON posts.post_cat_id = categories.cat_id ";
+                $query .= "ORDER BY posts.post_id DESC";
                 $all_posts = mysqli_query($connection, $query);
+                confirm_query($all_posts);
                 while( $row = mysqli_fetch_assoc($all_posts) ) {
                     $post_image = $row['post_image'];
                     $post_id = $row['post_id'];
@@ -98,6 +104,8 @@
                     $post_tags = $row['post_tags'];
                     $post_date = $row['post_date'];
                     $post_views_count = $row['post_views_count'];
+                    $cat_id = $row['cat_id'];
+                    $cat_title = $row['cat_title'];
 
                     
                     
@@ -113,13 +121,13 @@
                         }
 
                         echo "<td>{$post_title}</td>";
-                        $cat_name_query = "SELECT * FROM categories WHERE cat_id={$post_cat_id}";
-                        $cat_name_query_res = mysqli_query($connection, $cat_name_query);
-                        confirm_query($cat_name_query_res);
-                        while($row = mysqli_fetch_assoc($cat_name_query_res)) {
-                            $cat_title = $row['cat_title'];
+                        // $cat_name_query = "SELECT * FROM categories WHERE cat_id={$post_cat_id}";
+                        // $cat_name_query_res = mysqli_query($connection, $cat_name_query);
+                        // confirm_query($cat_name_query_res);
+                        // while($row = mysqli_fetch_assoc($cat_name_query_res)) {
+                            // $cat_title = $row['cat_title'];
                             echo "<td>{$cat_title}</td>";
-                        } 
+                        // } 
                         echo "<td>{$post_status}</td>";
                         echo "<td><img width='100' class='img-responsive' src='../images/$post_image' alt='image'></td>";
                         echo "<td>{$post_tags}</td>";
