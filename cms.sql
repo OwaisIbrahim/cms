@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2019 at 04:53 PM
+-- Generation Time: Jul 09, 2019 at 09:54 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.1.30
 
@@ -69,7 +69,8 @@ INSERT INTO `comments` (`comment_id`, `comment_post_id`, `comment_author`, `comm
 (14, 27, 'Usman Riaz', 'usmanriaz@gmail.com', 'Comment 2', 'unapproved', '2019-07-08'),
 (15, 27, 'JamesBond', 'bilaljaffery@gmail.com', 'Comment 3', 'approved', '2019-07-08'),
 (16, 27, 'Bilal Jaffery', 'bilaljaffery@gmail.com', 'Comment 4', 'unapproved', '2019-07-08'),
-(17, 27, 'Gala', 'gala@gmail.com', 'Comment 5', 'unapproved', '2019-07-08');
+(17, 27, 'Gala', 'gala@gmail.com', 'Comment 5', 'unapproved', '2019-07-08'),
+(19, 31, 'bilal', 'bilaljamal@gmail.com', 'THis is good', 'unapproved', '2019-07-09');
 
 -- --------------------------------------------------------
 
@@ -82,6 +83,7 @@ CREATE TABLE `posts` (
   `post_cat_id` int(3) NOT NULL,
   `post_title` varchar(255) NOT NULL,
   `post_author` varchar(255) NOT NULL,
+  `post_user` varchar(255) NOT NULL,
   `post_date` date NOT NULL,
   `post_image` text NOT NULL,
   `post_content` text NOT NULL,
@@ -95,15 +97,15 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`post_id`, `post_cat_id`, `post_title`, `post_author`, `post_date`, `post_image`, `post_content`, `post_tags`, `post_comment_count`, `post_status`, `post_views_count`) VALUES
-(7, 29, 'PHP', 'Riaz jaffery', '2019-07-05', 'image_1.jpg', 'Magento Course was good                                 ', 'php, magento, magento', 4, 'published', 0),
-(8, 29, 'Javascript', 'Bilal Usman', '2019-07-04', 'image_2.jpg', 'Better than php                 ', 'javascript, js, typescript', 4, 'published', 0),
-(10, 29, 'JS Feedback', 'Adnan Rafiq', '2019-07-04', 'image_5.jpg', '        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', 'js, php, magenti', 4, 'published', 0),
-(14, 32, 'POST 1000', 'James Bonf', '2019-07-04', 'image_2.jpg', 'PHP         ', 'php, advance php', 5, 'published', 1),
-(23, 30, 'JS DEMO', 'Riaz jaffery', '2019-07-08', 'image_5.jpg', '<p>I love javascript</p>', 'js, angular, javascript', 0, 'published', 0),
-(25, 29, 'PHP', 'Riaz jaffery', '2019-07-08', 'image_1.jpg', 'Magento Course was good                                 ', 'php, magento, magento', 0, 'published', 0),
-(26, 29, 'PHP', 'Riaz jaffery', '2019-07-08', 'image_1.jpg', 'Magento Course was good                                 ', 'php, magento, magento', 0, 'published', 0),
-(27, 29, 'Javascript', 'Bilal Usman', '2019-07-08', 'image_2.jpg', 'Better than php                 ', 'javascript, js, typescript', 0, 'published', 11);
+INSERT INTO `posts` (`post_id`, `post_cat_id`, `post_title`, `post_author`, `post_user`, `post_date`, `post_image`, `post_content`, `post_tags`, `post_comment_count`, `post_status`, `post_views_count`) VALUES
+(10, 29, 'JS Feedback', 'Adnan Rafiq', 'Adnan Rafiq', '2019-07-04', 'image_5.jpg', '        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', 'js, php, magenti', 4, 'published', 1),
+(14, 32, 'POST 1000', 'James Bonf', 'James Bonf', '2019-07-04', 'image_2.jpg', 'PHP         ', 'php, advance php', 5, 'published', 1),
+(23, 30, 'JS DEMO', 'Riaz jaffery', 'Riaz jaffery', '2019-07-08', 'image_5.jpg', '<p>I love javascript</p>', 'js, angular, javascript', 0, 'published', 0),
+(25, 29, 'PHP', 'Riaz jaffery', 'Riaz jaffery', '2019-07-08', 'image_1.jpg', 'Magento Course was good                                 ', 'php, magento, magento', 0, 'published', 0),
+(26, 29, 'PHP', 'Riaz jaffery', 'Riaz jaffery', '2019-07-08', 'image_1.jpg', 'Magento Course was good                                 ', 'php, magento, magento', 0, 'published', 0),
+(27, 29, 'Javascript', 'Bilal Usman', 'Bilal Usman', '2019-07-09', 'image_2.jpg', '<p>Better than php</p>', 'javascript, js, typescript', 0, 'published', 11),
+(30, 30, 'Test User 2', '', 'abc1', '2019-07-08', 'image_5.jpg', '<p>This is test user 2</p>', 'js, js10, angular', 0, 'published', 0),
+(31, 30, 'Test User 55', '', 'ricky', '2019-07-09', 'image_5.jpg', '<p>This is test 55</p>', 'js, js7', 0, 'draft', 3);
 
 -- --------------------------------------------------------
 
@@ -131,14 +133,10 @@ INSERT INTO `users` (`user_id`, `user_username`, `user_password`, `user_firstnam
 (1, 'bilal', '123', 'bilal', 'gaffar', 'bilalgaffar@gmail.com', '', 'admin', ''),
 (3, 'ricky', 'ricky123', 'Ricky', 'Sons', 'ricky@gmail.com', '', 'admin', ''),
 (4, 'gala', 'gala', 'Gala', 'gala', 'gala@gmail.com', '', 'admin', '$2y$10$usesomecrazystring22'),
-(5, 'abc1', 'abc1', 'Robert', 'Sandro', 'abc1@gmail.com', '', 'subscriber', '$2y$10$usesomecrazystring22'),
 (9, 'abc123', 'abc123', 'Robin', 'Host', 'abc123@gmail.com', '', 'subscriber', '$2y$10$usesomecrazystring22'),
-(10, 'robin', '$1$OZvTdYyO$xAdBnjCCRh94HOyfCk.mq1', '', '', 'robin@gmail.com', '', 'subscriber', '$2y$10$usesomecrazystring22'),
-(11, 'robin', '$1$7bTiEGbf$xsSmmfnJYy22WFDIUwLiJ.', '', '', 'robin@gmail.com', '', 'subscriber', '$2y$10$usesomecrazystring22'),
 (12, 'demo123', '$1$pwBilkNg$nBwjWy1x..YCuGoEcnmzE/', 'Riaz', 'Jaffery', 'demo@gmail.com', '', 'admin', '$2y$10$usesomecrazystring22'),
 (13, 'demo1000', '$1$wmEub61d$mvYYzNUBakPQ3SuY417m1/', '', '', 'demo@gmail.com', '', 'admin', '$2y$10$usesomecrazystring22'),
 (17, 'newuser', '$2y$12$yZNml4Rg2B1d.TDRLiQzJeg8qlwHuY9rO95KzrsTcwaWwUVG0haDG', '', '', 'newuser@gmail.com', '', 'subscriber', '$2y$10$usesomecrazystring22'),
-(18, 'peter', '$2y$12$dFKPC22WJ.DSKEdAZBiE8uxhdGMgVlcRNKBb1PW4cQQwUBV5Xpqra', '', '', 'peter@gmail.com', '', 'admin', '$2y$10$usesomecrazystring22'),
 (21, 'william', '$2y$10$84tv0zv7x0s1LHU5/mUBVuHoyYJ5WVcP.eDM4B4j0N8WI1D/M4zmS', 'WIlliam', 'Johns', 'william@gmail.com', '', 'admin', '$2y$10$usesomecrazystring22'),
 (22, 'newuser', '$2y$12$3qVCHSmwzLshfW56U5LNGe2Adizqd0uJPtto0aUVIe2VqkPDZUg1O', 'William', 'Shakes', 'newuser@gmail.com', '', 'admin', '$2y$10$usesomecrazystring22');
 
@@ -159,10 +157,12 @@ CREATE TABLE `users_online` (
 --
 
 INSERT INTO `users_online` (`id`, `session`, `time`) VALUES
-(2, 'p8njvn36qvhnntgppphcfoji7j', 1562597614),
+(2, 'p8njvn36qvhnntgppphcfoji7j', 1562599005),
 (3, 'i82ut6jfcukln2pmv8q54e65i4', 1562586740),
 (4, 'o8i62bmus77k58sg9ihfbvere8', 1562597420),
-(5, 'i4jich7g99qds47312hfhl631d', 1562590517);
+(5, 'i4jich7g99qds47312hfhl631d', 1562590517),
+(6, '23itema69gsftfb0krjo2hnefs', 1562654338),
+(7, 'kcstktubblarfpcq294gd706js', 1562658827);
 
 --
 -- Indexes for dumped tables
@@ -212,13 +212,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `comment_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `post_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -230,7 +230,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users_online`
 --
 ALTER TABLE `users_online`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

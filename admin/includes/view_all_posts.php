@@ -67,29 +67,31 @@
             <tr>
                 <th><input id="selectAllBoxes" type="checkbox"></th>
                 <th>Post Id</th>
-                <th>Author</th>
+                <th>Users</th>
                 <th>Title</th>
                 <th>Category</th>
                 <th>Status</th>
                 <th>Image</th>
                 <th>Tags</th>
                 <th>Total Comments</th>
-                <th>Total Views</th>
                 <th>Date</th>
                 <th>View Post</th>
                 <th>Edit</th>
                 <th>Delete</th>
+                <th>Total Views</th>
+
             </tr>
         </thead>
         <tbody>
             <?php  
-                $query = "SELECT * FROM POSTS ORDER BY post_id DESC";
+                $query = "SELECT * FROM posts ORDER BY post_id DESC";
                 $all_posts = mysqli_query($connection, $query);
                 while( $row = mysqli_fetch_assoc($all_posts) ) {
                     $post_image = $row['post_image'];
                     $post_id = $row['post_id'];
                     $post_cat_id = $row['post_cat_id'];
                     $post_author = $row['post_author'];
+                    $post_user = $row['post_user'];
                     $post_title = $row['post_title'];
                     $post_status = $row['post_status'];
                     $post_tags = $row['post_tags'];
@@ -102,7 +104,13 @@
                     echo "<tr>";
                         echo "<td ><input class='checkBox' type='checkbox' name='checkBoxArray[]' value='$post_id'></td>";
                         echo "<td>{$post_id}</td>"; 
-                        echo "<td>{$post_author}</td>";
+
+                        if( !empty($post_author) ) {
+                            echo "<td>{$post_author}</td>";
+                        } elseif ( !empty($post_user) ) {
+                            echo "<td>{$post_user}</td>";
+                        }
+
                         echo "<td>{$post_title}</td>";
                         $cat_name_query = "SELECT * FROM categories WHERE cat_id={$post_cat_id}";
                         $cat_name_query_res = mysqli_query($connection, $cat_name_query);
@@ -135,11 +143,13 @@
 <?php
     // DELETE POST
     if( isset( $_GET['delete'] ) ) {
-        $the_post_id = $_GET['delete'];
-        $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
-        $delete_query = mysqli_query($connection, $query);
-        confirm_query($delete_query);
-        header("Location: posts.php");
+        if( isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
+            $the_post_id = mysqli_real_escape_string($connection, $_GET['delete']);
+            $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
+            $delete_query = mysqli_query($connection, $query);
+            confirm_query($delete_query);
+            header("Location: posts.php");
+        }
     }
 
     // DELETE POST

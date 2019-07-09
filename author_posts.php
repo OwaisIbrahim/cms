@@ -22,12 +22,12 @@
                         $the_post_id = $_GET['p_id'];
                         $the_post_author = $_GET['author'];
                     }
-                    $query = "SELECT * FROM posts WHERE post_author = '{$the_post_author}'";
+                    $query = "SELECT * FROM posts WHERE post_user = '{$the_post_author}'";
                     $all_posts = mysqli_query($connection, $query);
 
                     while( $row = mysqli_fetch_assoc($all_posts) ) {
                         $post_title = $row['post_title'];
-                        $post_author = $row['post_author'];
+                        $post_user = $row['post_user'];
                         $post_date = $row['post_date'];
                         $post_image = $row['post_image'];
                         $post_content = $row['post_content'];
@@ -41,7 +41,7 @@
                     <a href="#"> <?php echo $post_title ?> </a>
                 </h2>
                 <p class="lead">
-                    All Post by  <b><?php echo $post_author ?></b> </a>
+                    All Post by  <b><?php echo $post_user ?></b> </a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on  <?php echo $post_date ?> </p>
                 <hr>

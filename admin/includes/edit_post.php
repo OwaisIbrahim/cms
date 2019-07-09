@@ -9,7 +9,7 @@
             $post_title = $row['post_title'];
             $post_content = $row['post_content'];
             
-            $post_author = $row['post_author'];
+            $post_user = $row['post_user'];
             $post_cat_id = $row['post_cat_id'];
             $post_status = $row['post_status'];
             $post_image = $row['post_image'];
@@ -22,7 +22,7 @@
             $post_title = $_POST['post_title'];
             $post_content = $_POST['post_content'];
             $post_content = mysqli_real_escape_string($connection, $post_content);
-            $post_author = $_POST['post_author'];
+            $post_user = $_POST['post_user'];
             $post_cat_id = $_POST['post_cat_id'];
             $post_status = $_POST['post_status'];
             $post_image = $_FILES['image']['name'];
@@ -44,7 +44,7 @@
             $query .= "post_title = '{$post_title}', ";
             $query .= "post_cat_id = '{$post_cat_id}', ";
             $query .= "post_date = now(), ";
-            $query .= "post_author = '{$post_author}', ";
+            $query .= "post_user = '{$post_user}', ";
             $query .= "post_status = '{$post_status}', ";
             $query .= "post_tags = '{$post_tags}', ";
             $query .= "post_content = '{$post_content}', ";
@@ -69,6 +69,8 @@
      </div> 
 
      <div class="form-group">
+        <label for="post_category">Categories: </label>
+        <br>
         <select name="post_cat_id" id="">
             <?php 
                 $query = "SELECT * FROM categories";
@@ -85,11 +87,35 @@
      </div>
 
      <div class="form-group">
+        <label for="post_user">Users: </label>
+        <br>
+        <select name="post_user" id="post_user">
+            
+            <?php //SHOW DEFAULT USER
+                echo "<option value='$post_user'>{$post_user}</option>"; 
+            ?>
+            <?php //FETCH USERS OTHER THAN DEFAULT
+                $query = "SELECT * FROM users WHERE user_username!='{$post_user}'";
+                $select_user_query = mysqli_query($connection, $query);
+                confirm_query($select_user_query);
+                while($row = mysqli_fetch_assoc($select_user_query)) {
+                    $user_id = $row['user_id'];
+                    $user_username = $row['user_username'];    
+                    echo "<option value='$user_username'>{$user_username}</option>";
+                }
+            ?>
+        </select>
+     </div>
+     
+     <!-- <div class="form-group">
         <label for="post_author">Post Author</label>
          <input type="text" class="form-control" name="post_author" value='<?php echo $post_author ?>'>
-     </div>
-
-     <select name="post_status" id="">
+     </div> -->
+     <div class="form-group">
+        <label for="post_status">Status: </label>
+        <br>
+        <select name="post_status" id="">
+        
                 <option value="<?php echo $post_status; ?>">
                     <?php echo $post_status; ?>
                 </option>
@@ -100,7 +126,8 @@
                         echo "<option value='published'>Publish</option>";
                     }
                 ?>
-     </select>
+        </select>
+    </div>
 
      
       <div class="form-group">
