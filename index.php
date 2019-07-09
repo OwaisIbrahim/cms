@@ -19,9 +19,20 @@
 
                 <?php 
                     //GET TOTAL POSTS
-                    $post_query_count = "SELECT * FROM posts";
+                    if( isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ) {
+                        $post_query_count = "SELECT * FROM posts";
+                        
+                    } else {
+                        $post_query_count = "SELECT * FROM posts WHERE post_status='published'";
+                        
+                    }
                     $find_count = mysqli_query($connection, $post_query_count);
                     $total_posts = mysqli_num_rows($find_count);
+
+                    if($total_posts < 1) {
+                        echo "<h3 class='text-center'>NO POST SORRY</h3>";
+
+                    }
 
                     $per_page = 2;
 
@@ -39,10 +50,16 @@
                         $page_1 = ($page * $per_page) - $per_page;
                     }
 
-                    
+                    if( isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ) {
+                        $all_posts_query = "SELECT * FROM posts LIMIT $page_1, $per_page";
+                        
+                        
+                    } else {    
+                        $all_posts_query = "SELECT * FROM posts WHERE post_status='published' LIMIT $page_1, $per_page";                        
+                        
+                    }
 
-                    $query = "SELECT * FROM posts WHERE post_status='published' LIMIT $page_1, $per_page";
-                    $all_posts = mysqli_query($connection, $query);
+                    $all_posts = mysqli_query($connection, $all_posts_query);
 
                     while( $row = mysqli_fetch_assoc($all_posts) ) {
                         $post_id = $row['post_id'];
@@ -53,9 +70,6 @@
                         $post_content = $row['post_content'];
                         $post_status = $row['post_status'];
 
-                        if( $post_status !== 'published' ) {
-                            echo "<h3 class='text-center'>NO POST SORRY</h3>";
-                        } else {
 
                 ?>
                             <!-- First Blog Post -->
@@ -74,10 +88,7 @@
                             <p> <?php echo $post_content ?> </p>
                             <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                             <hr>
-                <?php 
-                        }
-                    }
-                ?>
+               
 
                 <!-- Pager -->
                 <ul class="pager">
@@ -91,7 +102,10 @@
                         }
                     ?>
                 </ul>
-
+                <?php 
+                        
+                    }
+                ?>
             </div>
             
             <?php include "includes/sidebar.php" ?>

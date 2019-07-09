@@ -24,11 +24,20 @@
                             echo "<li><a href='#'> {$cat_title} </a></li>";
                         }
                     ?>
-                    <li>
-                        <a href="admin">Admin</a>
+                    <?php $navClassArr = [ "index.php" => "", "Registration.php" => "" , "contact.php" => ""]; ?>
+                    <?php 
+                        $pageName = basename($_SERVER['PHP_SELF']);
+                        echo $pageName;
+                        echo $navClassArr[$pageName] = 'active';
+                    ?>
+                    <li  class="<?php echo $navClassArr["index.php"]; ?>">
+                        <a href="admin">Admin </a>
                     </li>
-                    <li>
+                    <li  class="<?php echo $navClassArr["Registration.php"]; ?>">
                         <a href="Registration.php">Registration</a>
+                    </li>
+                    <li class="<?php echo $navClassArr["contact.php"]; ?>">
+                        <a href="contact.php">Contact</a>
                     </li>
                     <?php 
                         if( isset($_SESSION['user_role']) ) {

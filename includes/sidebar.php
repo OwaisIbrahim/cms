@@ -25,22 +25,28 @@
 
                 <!-- LOGIN -->
                 <div class="well">
+                    <?php if( isset($_SESSION['user_role']) ):  ?>
+                        <h4>Logged in as <b><?php echo $_SESSION['user_username'] ?></b></h4> 
+                        <a href="includes/logout.php" class="btn btn-primary">Logout</a>
+                    <?php else: ?>
                     <h4>Login</h4>
-                    <form action="includes/login.php" method="post">
-                        <div class="form-group">
-                            <input type="text" name="username" class="form-control" placeholder="Enter Username">
-                        </div>
-                        <div class="input-group">                            
-                            <input type="password" name="password" class="form-control" placeholder="Enter Password">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" name="login" type="submit">
-                                    SUBMIT
-                                </button>
-                            </span>
-                        </div>                            
-                            
-                    </form>
-                    <!-- /.input-group -->
+                        <form action="includes/login.php" method="post">
+                            <div class="form-group">
+                                <input type="text" name="username" class="form-control" placeholder="Enter Username">
+                            </div>
+                            <div class="input-group">                            
+                                <input type="password" name="password" class="form-control" placeholder="Enter Password">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" name="login" type="submit">
+                                        SUBMIT
+                                    </button>
+                                </span>
+                            </div>                            
+                                
+                        </form>
+                        <!-- /.input-group -->
+                    <?php endif; ?>
+                    
                 </div>
 
 

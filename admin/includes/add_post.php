@@ -1,7 +1,7 @@
 
 <?php 
     if( isset($_POST['create_post']) ) {
-        $post_title = $_POST['post_title'];
+        $post_title = escape($_POST['post_title']);
         $post_cat_id = $_POST['post_category'];
         $post_user = $_POST['post_user'];
         $post_content = mysqli_real_escape_string($connection, $_POST['post_content']);
