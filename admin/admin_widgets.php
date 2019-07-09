@@ -11,78 +11,26 @@
                                 <i class="fa fa-file-text fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                            <?php 
-                                //POST COUNT
-                                $query = "SELECT COUNT(*) 'total_posts' FROM posts";
-                                $post_count_query = mysqli_query($connection, $query);
-                                if( !$post_count_query ) {
-                                    die("QUERY ERROR: " .mysqli_error($connection) );
-                                }
-                                while( $row = mysqli_fetch_assoc($post_count_query) ) {
-                                    $post_count = $row['total_posts'];
-                                }
+                                <?php 
+                                    //PUBLISHED POST COUNT
+                                    $published_post_count = check_status('posts', 'post_status', 'published');
 
-                                //PUBLISHED POST COUNT
-                                $query = "SELECT COUNT(*) 'total_posts' FROM posts WHERE post_status='published'";
-                                $published_post_count_query = mysqli_query($connection, $query);
-                                if( !$published_post_count_query ) {
-                                    die("QUERY ERROR: " .mysqli_error($connection) );
-                                }
-                                while( $row = mysqli_fetch_assoc($published_post_count_query) ) {
-                                    $published_post_count = $row['total_posts'];
-                                }
+                                    //DRAFT POST COUNT
+                                    $draft_post_count = check_status('posts', 'post_status', 'draft');
 
-                                //DRAFT POST COUNT
-                                $query = "SELECT COUNT(*) 'total_posts' FROM posts WHERE post_status='draft'";
-                                $draft_post_count_query = mysqli_query($connection, $query);
-                                if( !$draft_post_count_query ) {
-                                    die("QUERY ERROR: " .mysqli_error($connection) );
-                                }
-                                while( $row = mysqli_fetch_assoc($draft_post_count_query) ) {
-                                    $draft_post_count = $row['total_posts'];
-                                }
+                                    //UNAPPROVE COMMENTS COUNT
+                                    $unapprove_comment_count = check_status('comments', 'comment_status', 'unapproved');
+                                    
+                                    //SUBSCRIBER USER COUNT
+                                    $subscriber_count = check_status('users', 'user_role', 'subscriber');
 
-                                //COMMENTS COUNT
-                                $query = "SELECT COUNT(*) 'total_comments' FROM comments";
-                                $comment_count_query = mysqli_query($connection, $query);
-                                if( !$comment_count_query ) {
-                                    die("QUERY ERROR: " .mysqli_error($connection) );
-                                }
-                                while( $row = mysqli_fetch_assoc($comment_count_query) ) {
-                                    $comment_count = $row['total_comments'];
-                                }
-
-                                //UNAPPROVE COMMENTS COUNT
-                                $query = "SELECT * FROM comments WHERE comment_status='unapproved'";
-                                $unapprove_comment_count_query = mysqli_query($connection, $query);
-                                $unapprove_comment_count = mysqli_num_rows($unapprove_comment_count_query);
-
-                                //USERS COUNT
-                                $query = "SELECT COUNT(*) 'total_users' FROM users";
-                                $user_count_query = mysqli_query($connection, $query);
-                                if( !$user_count_query ) {
-                                    die("QUERY ERROR: " .mysqli_error($connection) );
-                                }
-                                while( $row = mysqli_fetch_assoc($user_count_query) ) {
-                                    $user_count = $row['total_users'];
-                                }
-
-                                //SUBSCRIBER USER COUNT
-                                $query = "SELECT * FROM users WHERE user_role='subscriber'";
-                                $select_all_subscriber = mysqli_query($connection, $query);
-                                $subscriber_count = mysqli_num_rows($select_all_subscriber);
-
-                                //CATEGORIES COUNT
-                                $query = "SELECT COUNT(*) 'total_categories' FROM categories";
-                                $categories_count_query = mysqli_query($connection, $query);
-                                if( !$categories_count_query ) {
-                                    die("QUERY ERROR: " .mysqli_error($connection) );
-                                }
-                                while( $row = mysqli_fetch_assoc($categories_count_query) ) {
-                                    $categories_count = $row['total_categories'];
-                                }
-                            ?>
-                        <div class='huge'><?php echo $post_count ?></div>
+                                    
+                                ?>
+                                <div class='huge'>
+                                    <?php //TOTAL POST COUNT
+                                        echo $post_count = record_count('posts'); 
+                                    ?>
+                                </div>
                                 <div>Posts</div>
                             </div>
                         </div>
@@ -104,8 +52,12 @@
                                 <i class="fa fa-comments fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                            <div class='huge'><?php echo $comment_count ?></div>
-                            <div>Comments</div>
+                                <div class='huge'>
+                                    <?php //COMMENTS COUNTS
+                                        echo $comment_count = record_count('comments'); 
+                                    ?>
+                                </div>
+                                <div>Comments</div>
                             </div>
                         </div>
                     </div>
@@ -126,9 +78,13 @@
                                 <i class="fa fa-user fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                            <div class='huge'><?php echo $user_count ?></div>
+                                <div class='huge'>
+                                    <?php //USER COUNT
+                                        echo $user_count = record_count('users'); 
+                                    ?>
+                                </div>
                                 <div> Users</div>
-                            </div>
+                                </div>
                         </div>
                     </div>
                     <a href="users.php">
@@ -148,7 +104,11 @@
                                 <i class="fa fa-list fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class='huge'><?php echo $categories_count ?></div>
+                                <div class='huge'>
+                                    <?php //CATEGORIES COUNT
+                                        echo $categories_count = record_count('categories'); 
+                                    ?>
+                                </div>
                                 <div>Categories</div>
                             </div>
                         </div>
@@ -178,7 +138,7 @@
                     ['Data ', 'Count'],
 
                     <?php 
-                        $element_text = ['Active Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'Subscribers', 'Categories'];
+                        $element_text = ['Total Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'Subscribers', 'Categories'];
                         $element_count = [$post_count, $published_post_count, $draft_post_count, $comment_count, $unapprove_comment_count, $user_count, $subscriber_count, $categories_count];
 
                         for( $i=0; $i < 7; $i++ ) {

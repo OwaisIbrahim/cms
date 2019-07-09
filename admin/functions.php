@@ -107,6 +107,22 @@ users_online();
         }
     }
 
+    function record_count($table_name) {
+        global $connection;
+        $query = "SELECT * FROM " . $table_name;
+        $select_all_posts = mysqli_query($connection, $query);
+        $result = mysqli_num_rows($select_all_posts);
+        confirm_query($result);
+        return $result;
+    }
 
+    function check_status($table_name, $col_name, $status) {
+        global $connection;
+        $query = "SELECT * FROM $table_name WHERE $col_name = '$status'";
+        $select_all_posts = mysqli_query($connection, $query);
+        $result = mysqli_num_rows($select_all_posts);
+        confirm_query($result);
+        return $result;
+    }
 
 ?>
