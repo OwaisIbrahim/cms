@@ -16,7 +16,6 @@
                     Page Heading
                     <small>Secondary Text</small>
                 </h1>
-
                 <?php 
                     //GET TOTAL POSTS
                     if( isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ) {

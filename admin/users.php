@@ -1,5 +1,11 @@
 <?php ob_start(); ?> <!-- REMOVE BUFFER CACHE IF PAGE RELOADS -->
 <?php include "includes/admin_header.php" ?>
+
+<?php if( !is_admin( $_SESSION['user_username'] ) )  {
+        header("Location: index.php");
+    }
+?>
+
 <body>
 
     <div id="wrapper">

@@ -138,9 +138,20 @@
     
                         echo "<td><a href='post_comments.php?p_id=$post_id'>{$post_comment_count}</a></td>";
                         echo "<td>{$post_date}</td>";
-                        echo "<td><a href='../post.php?p_id={$post_id}'>View</a></td>";
-                        echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-                        echo "<td><a  onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'>Delete</a></td>";
+                        echo "<td><a class='btn btn-primary' href='../post.php?p_id={$post_id}'>View</a></td>";
+                        echo "<td><a class='btn btn-info' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
+
+                        ?>
+
+                        <form method="post">
+                            <input type="hidden" name="post_id" value="<?php echo $post_id ?>">
+                        <?php 
+                            echo "<td><input class='btn btn-danger' onClick=\"javascript: return confirm('Are you sure you want to delete?');\" type='submit' name='delete' value='Delete'></td>";
+                        ?>
+                        </form>
+                        <?php
+
+                        // echo "<td><a  onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'>Delete</a></td>";
                         echo "<td><a href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
 
                     echo "</tr>";
@@ -151,9 +162,11 @@
 </form>
 <?php
     // DELETE POST
-    if( isset( $_GET['delete'] ) ) {
+    
+    if( isset( $_POST['delete'] ) ) {
+        echo "I AM IN";
         if( isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
-            $the_post_id = mysqli_real_escape_string($connection, $_GET['delete']);
+            $the_post_id = mysqli_real_escape_string($connection, $_POST['post_id']);
             $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
             $delete_query = mysqli_query($connection, $query);
             confirm_query($delete_query);
