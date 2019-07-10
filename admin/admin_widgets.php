@@ -22,7 +22,7 @@
                                     $unapprove_comment_count = check_status('comments', 'comment_status', 'unapproved');
                                     
                                     //SUBSCRIBER USER COUNT
-                                    $subscriber_count = check_status('users', 'user_role', 'subscriber');
+                                   $subscriber_count = check_status('users', 'user_role', 'subscriber');
 
                                     
                                 ?>

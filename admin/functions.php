@@ -41,9 +41,10 @@
 users_online();
 
     function confirm_query($result) {
-        global $connection;        
+        global $connection;
+        //echo $result;       
         if( !$result ) {
-            die("QUERY FAILS: " . mysqli_error($connection) );
+            die("QUERY FAILED: " . mysqli_error($connection) );
         }
     }
 
@@ -108,6 +109,7 @@ users_online();
     }
 
     function record_count($table_name) {
+        
         global $connection;
         $query = "SELECT * FROM " . $table_name;
         $select_all_posts = mysqli_query($connection, $query);
@@ -121,7 +123,6 @@ users_online();
         $query = "SELECT * FROM $table_name WHERE $col_name = '$status'";
         $select_all_posts = mysqli_query($connection, $query);
         $result = mysqli_num_rows($select_all_posts);
-        confirm_query($result);
         return $result;
     }
 
