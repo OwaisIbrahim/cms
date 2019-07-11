@@ -51,7 +51,7 @@
                             <?php 
                                 if( isset($_GET['edit'] ) ) {
                                     $edit_cat_id = $_GET['edit'];
-                                    include "update_categories.php" ;
+                                    include "includes/update_categories.php" ;
                                 }
                             ?>
                         </div>

@@ -60,7 +60,7 @@
                         $query = "SELECT * FROM categories LIMIT 4";
                         $all_cat = mysqli_query($connection, $query);
                         if(!$all_cat) {
-                            die("ERROR: GetAllCategories Fails at sidebar.php " . mysqli_error($allCat));
+                            die("ERROR: GetAllCategories Fails at sidebar.php " . mysqli_error($all_cat));
                         }                    
                     ?>
 

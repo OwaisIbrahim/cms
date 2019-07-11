@@ -56,17 +56,21 @@ users_online();
             if($cat_title == "" || empty($cat_title)) {
                 echo "This field should not be empty";
             } else {
+                /*
                 $insert_cat_query = "INSERT INTO categories(cat_title) ";
                 $insert_cat_query .= "VALUE('{$cat_title}') ";
-
                 $insert_cat_query_result = mysqli_query($connection, $insert_cat_query);
-                if(!$insert_cat_query_result) {
+                */
+                $stmt = mysqli_prepare($connection, "INSERT INTO categories(cat_title) VALUES(?) ");
+                mysqli_stmt_bind_param($stmt, 's', $cat_title);
+                mysqli_stmt_execute($stmt);
+                if(!$stmt) {
                     die("INSERTION QUERY FAILS" . mysqli_error($connection));
                 } else {
                     echo "Category Added";
                 }
             }
-
+            mysqli_stmt_close($stmt);
         }
     }
 

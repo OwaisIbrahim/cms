@@ -89,6 +89,11 @@
                             <hr>
                
 
+                
+                <?php 
+                        
+                    }
+                ?>
                 <!-- Pager -->
                 <ul class="pager">
                     <?php 
@@ -101,10 +106,6 @@
                         }
                     ?>
                 </ul>
-                <?php 
-                        
-                    }
-                ?>
             </div>
             
             <?php include "includes/sidebar.php" ?>
