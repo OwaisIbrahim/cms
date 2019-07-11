@@ -1,0 +1,17 @@
+{
+    "name": "owais.ibrahim/cms",
+    "require": {
+        "phpmailer/phpmailer": "^6.0"
+    },
+    "autoload": {
+        "classmap": [
+            "classes"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Owais Ibrahim",
+            "email": "owais@gmail.com"
+        }
+    ]
+}

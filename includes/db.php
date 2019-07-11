@@ -14,4 +14,7 @@
     if(!$connection) {
         die("DATABASE CONNECTION FAILS");
     }
+
+    $query = "SET NAMES utf8";
+    mysqli_query($connection, $query);
 ?>

@@ -248,4 +248,11 @@ users_online();
 
     }
 
+    function currentUser() {
+        if( isset( $_SESSION['user_username'] ) ) {
+            return$_SESSION['user_username'];
+        }
+        return false;
+    }
+
 ?>

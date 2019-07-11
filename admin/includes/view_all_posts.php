@@ -85,11 +85,14 @@
         </thead>
         <tbody>
             <?php  
+                $cur_user = currentUser();
                 // $query = "SELECT * FROM posts ORDER BY post_id DESC";
                 $query = "SELECT posts.post_id, posts.post_author, posts.post_user, posts.post_title, posts.post_cat_id, posts.post_status, posts.post_image, ";
                 $query .= "posts.post_tags, posts.post_comment_count, posts.post_date, posts.post_views_count, categories.cat_id, categories.cat_title ";
                 $query .= "FROM posts ";
                 $query .= "LEFT JOIN categories ON posts.post_cat_id = categories.cat_id ";
+                $query .= "WHERE post_user = '$cur_user' ";
+
                 $query .= "ORDER BY posts.post_id DESC";
                 $all_posts = mysqli_query($connection, $query);
                 confirm_query($all_posts);

@@ -35,6 +35,9 @@
                         <li  class="<?php echo $navClassArr["index.php"]; ?>">
                             <a href="/cms/admin">Admin </a>
                         </li>
+                        <li  class="<?php echo $navClassArr["login.php"]; ?>">
+                            <a href="/cms/includes/logout.php">Logout</a>
+                        </li>
                     <?php else: ?>
                         <li  class="<?php echo $navClassArr["Registration.php"]; ?>">
                             <a href="/cms/Registration">Registration</a>
