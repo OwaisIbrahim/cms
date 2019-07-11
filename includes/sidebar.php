@@ -1,11 +1,14 @@
-
+<?php 
+    if( ifitIsMethod('post') ) {
+        if( isset($_POST['username']) && isset($_POST['password']) ) {
+            login_user( $_POST['username'], $_POST['password'] );
+        } else {
+            redirect('index');
+        }
+    }
+?>
             <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
-
-
-
-
-
                 <!-- Blog Search Well -->
                 <div class="well">
                     <h4>Blog Search</h4>
@@ -30,7 +33,7 @@
                         <a href="includes/logout.php" class="btn btn-primary">Logout</a>
                     <?php else: ?>
                     <h4>Login</h4>
-                        <form action="includes/login.php" method="post">
+                        <form method="post">
                             <div class="form-group">
                                 <input type="text" name="username" class="form-control" placeholder="Enter Username">
                             </div>
@@ -41,7 +44,10 @@
                                         SUBMIT
                                     </button>
                                 </span>
-                            </div>                            
+                            </div>     
+                            <div class="form-group">
+                                <a href="forgot.php?forgot=<?php echo uniqid(true) ?>">Forgot Password</a>
+                            </div>                       
                                 
                         </form>
                         <!-- /.input-group -->
@@ -72,7 +78,7 @@
                                     while( $row = mysqli_fetch_assoc($all_cat)) {
                                         $cat_id = $row['cat_id'];
                                         $cat_title = $row['cat_title'];
-                                        echo "<li><a href='category.php?category_id=$cat_id'>{$cat_title}</a></li>";
+                                        echo "<li><a href='/cms/category/$cat_id'>{$cat_title}</a></li>";
                                     }
                                 ?>
                             </ul>

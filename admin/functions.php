@@ -166,6 +166,27 @@ users_online();
 
     function redirect($location) {
         return header("Location: " . $location);
+        exit;
+    }
+
+    function ifItIsMethod( $method = null ) {
+        if( $_SERVER['REQUEST_METHOD'] == strtoupper($method) ) {
+            return true;
+        }
+        return false;
+    }
+
+    function isLoggedIn() {
+        if( isset( $_SESSION['user_role'] ) ) {
+            return true;
+        }
+        return false;
+    }
+
+    function checkIfUserIsLoggedInAndRedirect( $redirectLocation = null ) {
+        if( isLoggedIn() ) {
+            redirect($redirectLocation);
+        }
     }
 
     function register_user($username, $email, $password) {
@@ -204,27 +225,27 @@ users_online();
             $db_user_firstname = $row['user_firstname'];
             $db_user_lastname = $row['user_lastname'];
             $db_user_role = $row['user_role'];
+
+            
+            if( password_verify($password, $db_user_password) ) {
+                $_SESSION['user_id'] = $db_user_id;
+                $_SESSION['user_username'] = $db_user_username;
+                $_SESSION['user_firstname'] = $db_user_firstname;
+                $_SESSION['user_lastname'] = $db_user_lastname;
+                $_SESSION['user_role'] = $db_user_role;
+                if($db_user_role == 'admin')
+                    redirect("/cms/admin");
+                else
+                    return false;
+
+            } else {
+                return false; 
+
+            }
+            // $password = crypt($password, $db_user_password);
         }
+        return true;
 
-        // $password = crypt($password, $db_user_password);
-
-        
-
-        if( password_verify($password, $db_user_password) ) {
-            $_SESSION['user_id'] = $db_user_id;
-            $_SESSION['user_username'] = $db_user_username;
-            $_SESSION['user_firstname'] = $db_user_firstname;
-            $_SESSION['user_lastname'] = $db_user_lastname;
-            $_SESSION['user_role'] = $db_user_role;
-            if($db_user_role == 'admin')
-                redirect("/cms/admin");
-            else
-                redirect("/cms");
-
-        } else {
-            redirect("/cms");
-
-        }
     }
 
 ?>
