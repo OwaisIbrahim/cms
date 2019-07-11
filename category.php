@@ -1,5 +1,4 @@
 <?php include "includes/db.php" ?>
-
 <?php include "includes/header.php" ?>
 <body>
 
@@ -66,7 +65,7 @@
                             </p>
                             <p><span class="glyphicon glyphicon-time"></span> Posted on  <?php echo $post_date ?> </p>
                             <hr>
-                            <img class="img-responsive" src=" images/<?php echo $post_image ?> " alt="">
+                            <img class="img-responsive" src="/cms/images/<?php echo $post_image ?> " alt="">
                             <hr>
                             <p> <?php echo $post_content ?> </p>
                             <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -105,10 +104,10 @@
     <!-- /.container -->
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="/cms/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/cms/js/bootstrap.min.js"></script>
 
 </body>
 
