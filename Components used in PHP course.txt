@@ -1,0 +1,14 @@
+For Pushing Notification use: 
+Pusher
+https://pusher.com/
+
+For toast messages on web use:
+toastr.js
+https://cdnjs.com/libraries/toastr.js/latest
+
+For Env Variable use
+vlucas
+https://github.com/vlucas/phpdotenv
+
+TEMP EMAIL:
+mailtrap
