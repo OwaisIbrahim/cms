@@ -1,6 +1,19 @@
 <?php  include "includes/db.php"; ?>
 <?php  include "includes/header.php"; ?>
-<?php  include "includes/nav.php"; ?>
+<?php  //include "includes/nav.php"; ?>
+
+<?php //PUSHER NOTIFICATION - Section42
+    require "vendor/autoload.php";
+   
+    $dotenv = Dotenv\Dotenv::create(__DIR__, '.env');
+    $dotenv->load();
+
+    $options = array(
+        'cluster' => 'ap2',
+        'useTLS' => true
+      );
+    $pusher = new Pusher\Pusher(getenv('APP_KEY'), getenv('APP_SECRET'), getenv('APP_ID'), $options);
+?>
     
     <?php
         // if( isset($_POST['register']) )
@@ -44,6 +57,8 @@
 
             if( empty($error) ) {
                 register_user($username, $email, $password);
+                $data['message'] = $username;
+                $pusher->trigger('notifications', 'new_user', $data);
                 login_user($username, $password);
 
             }
