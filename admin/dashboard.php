@@ -11,9 +11,9 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcome to Admin
+                            Welcome to Admin Dashboard
                             <small>
-                                <?php echo strtoupper(get_user_name()); ?>
+                                <?php echo $_SESSION['user_username'] ?>
                             </small>
                         </h1>
                         

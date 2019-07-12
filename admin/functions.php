@@ -1,5 +1,60 @@
 <?php
 
+//====== DATABASE HELPER FUNCTIONS ======//
+
+function redirect($location) {
+    return header("Location: " . $location);
+    exit;
+}
+
+
+function query($query) {
+    global $connection;
+    $result = mysqli_query($connection, $query);
+    confirm_query($result);
+    return $result;
+}
+
+function fetchRecords($result) {
+    return mysqli_fetch_array($result);
+}
+
+function count_records($result) {
+    return mysqli_num_rows($result);
+}
+
+//====== END DATABASE HELPER ======//
+
+//====== GENERAL HELPER ======//
+
+function get_user_name() {
+    return ( isset($_SESSION['user_username'])? $_SESSION['user_username']: null );
+}
+
+//====== GENERAL HELPER ENDS ======//
+
+//====== AUTHENTICATION HELPER ======//
+
+function is_admin($username = '') {
+    global $connection;
+    if( isLoggedIn() ) {  
+        $result = query("SELECT user_role FROM users WHERE user_id=".$_SESSION['user_id']." ");
+        $row = fetchRecords($result);
+        if( $row['user_role'] == "admin" )
+            return true;
+    }
+    return false;
+}
+
+//====== AUTHENTICATION HELPER ENDS ======//
+
+//====== USER SPECIFIC HELPERS ======//
+
+
+//====== USER SPECIFIC HELPER ENDS ======//
+
+
+
     function imagePlaceholder($image = '') {
         if(!$image) {
             return "image_4.jpg";
@@ -138,18 +193,6 @@ users_online();
         return $result;
     }
 
-    function is_admin($username = '') {
-        global $connection;
-        $query = "SELECT user_role FROM users WHERE user_username='{$username}'";
-        $result = mysqli_query($connection, $query);
-        confirm_query($result);
-        $row = mysqli_fetch_array($result);
-        if( $row['user_role'] == "admin" )
-            return true;
-        else
-            return false;
-    }
-
     function is_user_exist($username = '') {
         global $connection;
         $query = "SELECT * FROM users WHERE user_username='{$username}'";
@@ -172,10 +215,6 @@ users_online();
             return false;
     }
 
-    function redirect($location) {
-        return header("Location: " . $location);
-        exit;
-    }
 
     function ifItIsMethod( $method = null ) {
         if( $_SERVER['REQUEST_METHOD'] == strtoupper($method) ) {
